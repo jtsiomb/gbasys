@@ -1,7 +1,7 @@
 /*
 Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * the Linux 2.6.7 kernel (drivers/video/console/font_8x8.c)
  */
 
-#include "libgba_config.h"
+#include "config.h"
 
 #ifdef CONFIG_FONT_8X16
 

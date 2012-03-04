@@ -1,7 +1,7 @@
 /*
 Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,21 +18,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "libgba_config.h"
+#include "config.h"
 
 #include <stdio.h>
 #include <stdarg.h>
 #include "syscall.h"
 
-void halt(void) {
+void halt(void)
+{
 	__syscall(2);
 }
 
-void stop(void) {
+void stop(void)
+{
 	__syscall(3);
 }
 
-void print_vba(const char *str, ...) {
+void print_vba(const char *str, ...)
+{
 	char buf[128];
 	va_list arg_list;
 

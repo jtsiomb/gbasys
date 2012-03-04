@@ -1,7 +1,7 @@
 /*
 Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "libgba_config.h"
+#include "config.h"
 #include "dma.h"
 
 /* DMA Options */
-#define DMA_ENABLE 				0x80000000
+#define DMA_ENABLE				0x80000000
 #define DMA_INT_ENABLE			0x40000000
 #define DMA_TIMING_IMMED		0x00000000
 #define DMA_TIMING_VBLANK		0x10000000
@@ -48,13 +48,15 @@ static volatile unsigned long *reg_dma[4] = {(void*)0x040000b0, (void*)0x040000b
 
 /* --- perform a copy of words or halfwords using DMA --- */
 
-void dma_copy32(int channel, void *dst, void *src, int words) {
+void dma_copy32(int channel, void *dst, void *src, int words)
+{
 	reg_dma[channel][DMA_SRC] = (unsigned long)src;
 	reg_dma[channel][DMA_DST] = (unsigned long)dst;
 	reg_dma[channel][DMA_CTRL] = words | DMA_TIMING_IMMED | DMA_32 | DMA_ENABLE;
 }
 
-void dma_copy16(int channel, void *dst, void *src, int halfwords) {
+void dma_copy16(int channel, void *dst, void *src, int halfwords)
+{
 	reg_dma[channel][DMA_SRC] = (unsigned long)src;
 	reg_dma[channel][DMA_DST] = (unsigned long)dst;
 	reg_dma[channel][DMA_CTRL] = halfwords | DMA_TIMING_IMMED | DMA_16 | DMA_ENABLE;
@@ -62,14 +64,16 @@ void dma_copy16(int channel, void *dst, void *src, int halfwords) {
 
 /* --- fill a buffer with an ammount of words and halfwords using DMA --- */
 
-void dma_fill32(int channel, void *dst, unsigned long val, int words) {
+void dma_fill32(int channel, void *dst, unsigned long val, int words)
+{
 	unsigned long valmem = val;
 	reg_dma[channel][DMA_SRC] = (unsigned long)&valmem;
 	reg_dma[channel][DMA_DST] = (unsigned long)dst;
 	reg_dma[channel][DMA_CTRL] = words | DMA_SRC_FIX | DMA_TIMING_IMMED | DMA_32 | DMA_ENABLE;
 }
 
-void dma_fill16(int channel, void *dst, unsigned short val, int halfwords) {
+void dma_fill16(int channel, void *dst, unsigned short val, int halfwords)
+{
 	unsigned short valmem = val;
 	reg_dma[channel][DMA_SRC] = (unsigned long)&valmem;
 	reg_dma[channel][DMA_DST] = (unsigned long)dst;

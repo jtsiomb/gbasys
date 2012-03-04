@@ -1,7 +1,7 @@
 /*
 Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "libgba_config.h"
+#include "config.h"
 #include <stdlib.h>
 #include "font.h"
 #include "gfx.h"
@@ -97,7 +97,7 @@ int draw_glyph(unsigned char c, int x, int y, struct pixel_buffer *pbuf) {
 	struct pixel_buffer *glyph;
 
 	if(!(glyph = get_glyph(c, fg_color, bg_color, pbuf->bpp))) return -1;
-	
+
 	if(pbuf->bpp == 16) {
 		int i, j;
 		unsigned short *dptr = (unsigned short*)pbuf->pixels + y * pbuf->x + x;

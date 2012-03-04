@@ -4,10 +4,10 @@ src = $(wildcard src/*.c)
 obj = $(src:.c=.o)
 liba = libgbasys.a
 
-CPP = arm-agb-elf-cpp
-CC = arm-agb-elf-gcc
-AS = arm-agb-elf-as
-AR = arm-agb-elf-ar
+CPP = arm-eabi-cpp
+CC = arm-eabi-gcc
+AS = arm-eabi-as
+AR = arm-eabi-ar
 
 CFLAGS = -pedantic -marm -mcpu=arm7tdmi -Isrc
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,10 +18,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "libgba_config.h"
-#include "libgba.h"
+#include "config.h"
+#include "gbasys.h"
 
-void gba_init(void) {
+void gba_init(void)
+{
 	intr_init();
 	sig_init();
 	term_init();

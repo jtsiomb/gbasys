@@ -1,8 +1,11 @@
-#include "libgba.h"
+#include "gbasys.h"
 
-int main(void) {
+int main(void)
+{
 	int i;
 	struct font *font;
+
+	print_vba("foobar\n");
 
 	set_video_mode(VMODE_LFB_240x160_16, 1);
 

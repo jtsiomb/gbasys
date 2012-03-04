@@ -1,7 +1,7 @@
 /*
 Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "libgba_config.h"
+#include "config.h"
 
 #include <stdlib.h>
 #include "gfx.h"
@@ -70,7 +70,7 @@ int set_video_mode(int mode, int double_buffering) {
 	front_buffer->x = back_buffer->x = xres;
 	front_buffer->y = back_buffer->y = yres;
 	front_buffer->bpp = back_buffer->bpp = sizeof_pixel * 8;
-		
+
 	if(mode > 3) {
 		page_flipping = 1;
 		back_buffer->pixels = (void*)0x600a000;
@@ -84,7 +84,7 @@ int set_video_mode(int mode, int double_buffering) {
 
 void flip(void) {
 	static void *tmp;
-	
+
 	if(page_flipping) {
 		swap_page();
 		tmp = front_buffer->pixels;
@@ -121,13 +121,13 @@ void clear_buffer(struct pixel_buffer *pbuf, unsigned short color) {
 		color |= color << 8;
 		sz >>= 1;
 	}
-		
+
 	dma_fill16(3, pbuf->pixels, color, sz);
 }
 
 void copy_buffer(const struct pixel_buffer *src, struct pixel_buffer *dst) {
 	int words;
-	
+
 	if(src->x != dst->x || src->y != dst->y || src->bpp != dst->bpp) return;
 
 	words = (src->x * src->y) >> (src->bpp == 16 ? 1 : 2);
@@ -145,21 +145,21 @@ void draw_line(int x1, int y1, int x2, int y2, unsigned short col, struct pixel_
 	ptr += y1 * pbuf->x + x1;
 	dx = x2 - x1;
 	dy = y2 - y1;
-	
+
 	if(dx >= 0) {
 		x_inc = 1;
 	} else {
 		x_inc = -1;
 		dx = -dx;
 	}
-	
+
 	if(dy >= 0) {
 		y_inc = pbuf->x;
 	} else {
 		y_inc = -pbuf->x;
 		dy = -dy;
 	}
-	
+
 	dx2 = dx << 1;
 	dy2 = dy << 1;
 
