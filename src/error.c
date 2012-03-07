@@ -1,7 +1,7 @@
 /*
-Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
+Copyright 2004-2012 John Tsiombikas <nuclear@member.fsf.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 void panic(const char *str) {
 	set_video_mode(VMODE_LFB_240x160_16, 0);
 	clear_buffer(front_buffer, RGB(140, 30, 20));
-	
+
 	set_text_color(0xffff, RGB(140, 30, 20));
 	draw_string(" Don't Panic! ", 0, 0, front_buffer);
 	draw_string("_________________________", 0, 8, front_buffer);
 	if(str) draw_string(str, 0, 32, front_buffer);
 
-	for(;;);	
+	for(;;);
 }

@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 struct pixel_buffer {
 	int x, y, bpp;
 	void *pixels;
-};	
+};
 
 enum {
 	VMODE_LFB_240x160_16	= 3,
@@ -52,7 +52,7 @@ void clear_buffer(struct pixel_buffer *pbuf, unsigned short color);
 
 void copy_buffer(const struct pixel_buffer *src, struct pixel_buffer *dst);
 
-#define wait_vsync()	while(*reg_vcount < front_buffer->yres)
+#define wait_vsync()	while(*((volatile unsigned short*)0x4000006) < front_buffer->y)
 
 #define put_pixel(px, py, col, pbuf)	((unsigned short*)(pbuf)->pixels)[(py) * (pbuf)->x + (px)] = col
 void draw_line(int x1, int y1, int x2, int y2, unsigned short col, struct pixel_buffer *pbuf);

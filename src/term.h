@@ -1,7 +1,7 @@
 /*
-Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
+Copyright 2004-2012 John Tsiombikas <nuclear@member.fsf.org>
 
-This file is part of libgba, a library for GameBoy Advance development.
+This file is part of gbasys, a library for GameBoy Advance development.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,6 +32,8 @@ void term_init(void);
 int gba_getc(FILE *fp);
 int gba_putc(int c, FILE *fp);
 
+int gba_printf(const char *fmt, ...);
+
 #ifdef getc
 #undef getc
 #endif
@@ -41,5 +43,10 @@ int gba_putc(int c, FILE *fp);
 #undef putc
 #endif
 #define putc(c, fp)	gba_putc(c, fp)
+
+#ifdef printf
+#undef printf
+#endif
+#define printf gba_printf
 
 #endif	/* _TERM_H_ */

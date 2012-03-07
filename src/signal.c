@@ -32,11 +32,11 @@ static sighandler_t saved_signal;
 
 void sig_init(void) {
 	int i;
-	
+
 	for(i=0; i<SIG_MAX; i++) {
 		default_sig_handler[i] = sig_invalid_handler;
 	}
-	
+
 	default_sig_handler[SIGALRM] = SIG_IGN;
 	default_sig_handler[SIGUSR1] = SIG_IGN;
 	default_sig_handler[SIGUSR2] = SIG_IGN;
@@ -48,9 +48,9 @@ void sig_init(void) {
 
 sighandler_t signal(int signum, sighandler_t handler) {
 	sighandler_t prev = signal_handler[signum];
-	
+
 	signal_handler[signum] = handler == SIG_IGN ? 0 : (handler == SIG_DFL ? default_sig_handler[signum] : handler);
-	
+
 	return prev;
 }
 
@@ -68,7 +68,7 @@ int pause(void) {
 	set_int();
 
 	while(wait_for_signal);
-	
+
 	/*errno = EINTR;*/
 	return -1;
 }
@@ -79,4 +79,9 @@ void save_signal(int signum) {
 
 void restore_signal(int signum) {
 	signal_handler[signum] = saved_signal;
+}
+
+sighandler_t signal_func(int signum)
+{
+	return signal_handler[signum];
 }

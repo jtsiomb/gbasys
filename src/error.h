@@ -1,5 +1,5 @@
 /*
-Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
+Copyright 2004-2012 John Tsiombikas <nuclear@member.fsf.org>
 
 This file is part of libgba, a library for GameBoy Advance development.
 

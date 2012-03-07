@@ -69,3 +69,4 @@ int pause(void);
 
 void save_signal(int signum);
 void restore_signal(int signum);
+sighandler_t signal_func(int signum);
