@@ -46,10 +46,10 @@ int gba_getc(FILE *fp) {
 
 	if(fp != stdin) panic("getc: only stdin valid");
 
-	save_signal(SIGIO);
-	signal(SIGIO, noop);
+	save_signal(SIGTTIN);
+	signal(SIGTTIN, noop);
 	while(!key_queue->next) pause();
-	restore_signal(SIGIO);
+	restore_signal(SIGTTIN);
 
 	tmp = key_queue;
 	key_queue = key_queue->next;
@@ -77,5 +77,5 @@ static void key_handler(void) {
 			key_queue_tail = key;
 		}
 	}
-	raise(SIGIO);
+	raise(SIGTTIN);
 }

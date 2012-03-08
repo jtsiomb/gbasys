@@ -1,5 +1,5 @@
 /*
-Copyright 2004 John Tsiombikas <nuclear@siggraph.org>
+Copyright 2004-2012 John Tsiombikas <nuclear@member.fsf.org>
 
 This file is part of gbasys, a library for GameBoy Advance development.
 
@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include "gfx.h"
 
 #define FRAME_SEL_BIT	0x10
@@ -132,6 +133,42 @@ void copy_buffer(const struct pixel_buffer *src, struct pixel_buffer *dst) {
 
 	words = (src->x * src->y) >> (src->bpp == 16 ? 1 : 2);
 	dma_copy32(3, dst->pixels, src->pixels, words);
+}
+
+#define MIN(a, b)	((a) < (b) ? (a) : (b))
+
+void blit(struct pixel_buffer *src, int src_x, int src_y, int src_w, int src_h,
+		struct pixel_buffer *dst, int dst_x, int dst_y)
+{
+	int i, pixsize, width, height, dstride, sstride;
+	unsigned char *dptr, *sptr;
+
+	if(dst->bpp != src->bpp)
+		return;
+
+	if(src_w <= 0)
+		src_w = src->x;
+	if(src_h <= 0)
+		src_h = src->y;
+
+	width = MIN(src_w, MIN(src->x - src_x, dst->x - dst_x));
+	height = MIN(src_h, MIN(src->y - src_y, dst->y - dst_y));
+
+	if(width <= 0 || height <= 0)
+		return;
+
+	pixsize = dst->bpp / 8;
+	dptr = (unsigned char*)dst->pixels + (dst_y * dst->x + dst_x) * pixsize;
+	sptr = (unsigned char*)src->pixels + (src_y * src->x + src_x) * pixsize;
+
+	dstride = dst->x * pixsize;
+	sstride = src->x * pixsize;
+
+	for(i=0; i<height; i++) {
+		memcpy(dptr, sptr, width * pixsize);
+		sptr += sstride;
+		dptr += dstride;
+	}
 }
 
 

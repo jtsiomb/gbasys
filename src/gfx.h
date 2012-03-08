@@ -51,6 +51,8 @@ void destroy_pixel_buffer(struct pixel_buffer *pbuf);
 void clear_buffer(struct pixel_buffer *pbuf, unsigned short color);
 
 void copy_buffer(const struct pixel_buffer *src, struct pixel_buffer *dst);
+void blit(struct pixel_buffer *src, int src_x, int src_y, int src_w, int src_h,
+		struct pixel_buffer *dst, int dest_x, int dest_y);
 
 #define wait_vsync()	while(*((volatile unsigned short*)0x4000006) < front_buffer->y)
 

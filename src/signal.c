@@ -41,6 +41,7 @@ void sig_init(void) {
 	default_sig_handler[SIGUSR1] = SIG_IGN;
 	default_sig_handler[SIGUSR2] = SIG_IGN;
 	default_sig_handler[SIGIO] = SIG_IGN;
+	default_sig_handler[SIGTTIN] = SIG_IGN;
 	for(i=0; i<SIG_MAX; i++) {
 		signal_handler[i] = default_sig_handler[i];
 	}
