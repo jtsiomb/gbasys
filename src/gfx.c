@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 static volatile unsigned short *reg_disp_ctl = (void*)0x4000000;
 static volatile unsigned short *reg_vcount = (void*)0x4000006;
 
+static unsigned short *paladdr = (void*)0x5000000;
+
 static int xres, yres;
 static int sizeof_pixel;
 static int page_flipping;
@@ -171,6 +173,10 @@ void blit(struct pixel_buffer *src, int src_x, int src_y, int src_w, int src_h,
 	}
 }
 
+void set_palette(int idx, int r, int g, int b)
+{
+	paladdr[idx] = RGB(r, g, b);
+}
 
 void draw_line(int x1, int y1, int x2, int y2, unsigned short col, struct pixel_buffer *pbuf) {
 	int dx, dy, dx2, dy2;

@@ -54,6 +54,8 @@ void copy_buffer(const struct pixel_buffer *src, struct pixel_buffer *dst);
 void blit(struct pixel_buffer *src, int src_x, int src_y, int src_w, int src_h,
 		struct pixel_buffer *dst, int dest_x, int dest_y);
 
+void set_palette(int idx, int r, int g, int b);
+
 #define wait_vsync()	while(*((volatile unsigned short*)0x4000006) < front_buffer->y)
 
 #define put_pixel(px, py, col, pbuf)	((unsigned short*)(pbuf)->pixels)[(py) * (pbuf)->x + (px)] = col
