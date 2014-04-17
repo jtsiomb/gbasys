@@ -1,6 +1,6 @@
 /*
 gbasys - a gameboy advance hardware abstraction library
-Copyright (C) 2004-2012  John Tsiombikas <nuclear@member.fsf.org>
+Copyright (C) 2004-2014  John Tsiombikas <nuclear@member.fsf.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 #include "comm.h"
 #include "error.h"
 #include "signal.h"
