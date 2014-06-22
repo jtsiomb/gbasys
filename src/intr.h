@@ -39,20 +39,21 @@ enum {
 	INTR_GPAK
 };
 
-extern unsigned short *reg_int_master;
-extern unsigned short *reg_int_mask;
+#define REG_INTR_MASTER		(*(unsigned short*)0x4000208)
+#define REG_INTR_MASK		(*(unsigned short*)0x4000200)
+#define REG_INTR			(*(unsigned short*)0x4000202)
 
 void intr_init(void);
 
 /* set/clear interrupts */
-#define set_int()	do {*reg_int_master = 1;} while(0)
-#define clr_int()	do {*reg_int_master = 0;} while(0)
+#define set_int()	do {REG_INTR_MASTER = 1;} while(0)
+#define clr_int()	do {REG_INTR_MASTER = 0;} while(0)
 
 /* set an interrupt handler */
 void interrupt(int intr, void (*handler)(void));
 
 /* mask/unmask an interrupt */
-#define mask(intr)		do {*reg_int_mask ^= 1 << (intr);} while(0)
-#define unmask(intr)	do {*reg_int_mask |= 1 << (intr);} while(0)
+#define mask(intr)		do {REG_INTR_MASK ^= 1 << (intr);} while(0)
+#define unmask(intr)	do {REG_INTR_MASK |= 1 << (intr);} while(0)
 
 #endif	/* _INTR_H_ */

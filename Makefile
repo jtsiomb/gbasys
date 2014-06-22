@@ -4,7 +4,7 @@ src = $(wildcard src/*.c)
 obj = $(src:.c=.o)
 liba = libgbasys.a
 
-ARCH = arm-eabi
+ARCH = arm-none-eabi
 
 CPP = $(ARCH)-cpp
 CC = $(ARCH)-gcc

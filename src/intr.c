@@ -23,10 +23,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "gfx.h"
 
-unsigned short *reg_int_master = (unsigned short*)0x04000208;
-unsigned short *reg_int_mask = (unsigned short*)0x04000200;
-static volatile unsigned short *reg_int = (unsigned short*)0x04000202;
-
 #define MAX_INTR	14
 static void (*intr_table[MAX_INTR])(void);
 
@@ -38,10 +34,10 @@ static void intr_handler(void) {
 	int i;
 	unsigned short irq;
 	char buf[20];
-	
+
 	clr_int();
 
-	irq = *reg_int & 0x3fff;
+	irq = REG_INTR & 0x3fff;
 
 	for(i=0; i<MAX_INTR; i++) {
 		unsigned short irq_bit = (1 << i);
@@ -50,7 +46,7 @@ static void intr_handler(void) {
 		}
 	}
 
-	*reg_int = irq;
+	REG_INTR = irq;
 
 	set_int();
 }

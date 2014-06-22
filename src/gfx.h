@@ -56,6 +56,10 @@ void blit(struct pixel_buffer *src, int src_x, int src_y, int src_w, int src_h,
 
 void set_palette(int idx, int r, int g, int b);
 
+/* accepts 8.8 fixed point values */
+void set_bg_matrix(int a, int b, int c, int d);
+void set_bg_scale(int x, int y);
+
 #define wait_vsync()	while(*((volatile unsigned short*)0x4000006) < front_buffer->y)
 
 #define put_pixel(px, py, col, pbuf)	((unsigned short*)(pbuf)->pixels)[(py) * (pbuf)->x + (px)] = col

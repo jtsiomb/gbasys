@@ -35,8 +35,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define BG2_ENABLE		0x400
 #define BG3_ENABLE		0x800
 
-static volatile unsigned short *reg_disp_ctl = (void*)0x4000000;
-static volatile unsigned short *reg_vcount = (void*)0x4000006;
+#define REG_DISPCTL		(*(unsigned short*)0x4000000)
+#define REG_VCOUNT		(*(unsigned short*)0x4000006)
+
+#define REG_BG2PA		(*(short*)0x4000020)
+#define REG_BG2PB		(*(short*)0x4000022)
+#define REG_BG2PC		(*(short*)0x4000024)
+#define REG_BG2PD		(*(short*)0x4000026)
 
 static unsigned short *paladdr = (void*)0x5000000;
 
@@ -49,8 +54,8 @@ static struct pixel_buffer fbuf, bbuf;
 struct pixel_buffer *front_buffer = &fbuf;
 struct pixel_buffer *back_buffer = &bbuf;
 
-#define show_page(n)	((n) ? (*reg_disp_ctl |= FRAME_SEL_BIT) : (*reg_disp_ctl &= ~FRAME_SEL_BIT))
-#define swap_page()		(*reg_disp_ctl ^= FRAME_SEL_BIT)
+#define show_page(n)	((n) ? (REG_DISPCTL |= FRAME_SEL_BIT) : (REG_DISPCTL &= ~FRAME_SEL_BIT))
+#define swap_page()		(REG_DISPCTL ^= FRAME_SEL_BIT)
 
 int set_video_mode(int mode, int double_buffering) {
 	if(mode < 3 || mode > 5) return -1;
@@ -61,7 +66,7 @@ int set_video_mode(int mode, int double_buffering) {
 
 	sizeof_pixel = (mode == 4) ? 1 : 2;
 
-	*reg_disp_ctl = mode | BG2_ENABLE;
+	REG_DISPCTL = mode | BG2_ENABLE;
 
 	show_page(0);
 
@@ -176,6 +181,19 @@ void blit(struct pixel_buffer *src, int src_x, int src_y, int src_w, int src_h,
 void set_palette(int idx, int r, int g, int b)
 {
 	paladdr[idx] = RGB(r, g, b);
+}
+
+void set_bg_matrix(int a, int b, int c, int d)
+{
+	REG_BG2PA = a;
+	REG_BG2PB = b;
+	REG_BG2PC = c;
+	REG_BG2PD = d;
+}
+
+void set_bg_scale(int x, int y)
+{
+	set_bg_matrix(x, 0, 0, y);
 }
 
 void draw_line(int x1, int y1, int x2, int y2, unsigned short col, struct pixel_buffer *pbuf) {

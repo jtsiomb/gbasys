@@ -20,18 +20,26 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "input.h"
 
-volatile unsigned short *reg_key_state = (unsigned short*)0x4000130;
-volatile unsigned short *reg_key_cntl = (unsigned short*)0x4000132;
+#define REG_KEYSTATE	(*(unsigned short*)0x4000130)
+#define REG_KEYCTL		(*(unsigned short*)0x4000132)
 
 int get_key_state(int key) {
-	return ~(*reg_key_state) & key;
+	int res;
+	unsigned short prev_mask;
+
+	prev_mask = REG_KEYCTL;
+	disable_key_interrupts(key);
+
+	res = ~REG_KEYSTATE & key;
+	REG_KEYCTL = prev_mask;
+	return res;
 }
 
 void enable_key_interrupts(int keys) {
-	*reg_key_cntl |= (1 << 14) | keys;
+	REG_KEYCTL |= (1 << 14) | keys;
 }
 
 void disable_key_interrupts(int keys) {
 	if(keys == KEY_ALL) keys |= (1 << 14);
-	*reg_key_cntl ^= keys;
+	REG_KEYCTL ^= keys;
 }
