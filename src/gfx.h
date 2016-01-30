@@ -36,9 +36,9 @@ extern struct pixel_buffer *back_buffer, *front_buffer;
 	((((g) >> 3) & 0x1f) << 5) |\
 	(((r) >> 3) & 0x1f)
 
-#define GET_R(c)	((((c) >> 10) & 0x1f) << 3)
+#define GET_R(c)	(((c) & 0x1f) << 3)
 #define GET_G(c)	((((c) >> 5) & 0x1f) << 3)
-#define GET_B(c)	(((c) & 0x1f) << 3)
+#define GET_B(c)	((((c) >> 10) & 0x1f) << 3)
 
 int set_video_mode(int mode, int back_buffering);
 void flip(void);
