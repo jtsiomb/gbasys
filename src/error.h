@@ -1,6 +1,6 @@
 /*
 gbasys - a gameboy advance hardware abstraction library
-Copyright (C) 2004-2014  John Tsiombikas <nuclear@member.fsf.org>
+Copyright (C) 2004-2016  John Tsiombikas <nuclear@member.fsf.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,5 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _ERROR_H_
 
 void panic(const char *str);
+void panicf(const char *fmt, ...);
 
 #endif	/* _ERROR_H_ */
