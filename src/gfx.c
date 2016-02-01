@@ -245,3 +245,66 @@ void draw_line(int x1, int y1, int x2, int y2, unsigned short col, struct pixel_
 		}
 	}
 }
+
+enum {
+	OUT_L = 1,
+	OUT_R = 2,
+	OUT_T = 4,
+	OUT_B = 8
+};
+static unsigned int outcode(int x, int y, int left, int top, int right, int bot)
+{
+	unsigned int res = 0;
+	if(x < left) res |= OUT_L;
+	if(x > right) res |= OUT_R;
+	if(y < top) res |= OUT_T;
+	if(y > bot) res |= OUT_B;
+	return res;
+}
+
+int clip_line(int *x1, int *y1, int *x2, int *y2, int left, int top, int right, int bot)
+{
+	int i;
+	unsigned int out1, out2;
+
+	--right;
+	--bot;
+	out1 = outcode(*x1, *y1, left, top, right, bot);
+	out2 = outcode(*x2, *y2, left, top, right, bot);
+
+	for(;;) {
+		int x, y;
+		unsigned int outout;
+
+		if((out1 | out2) == 0)
+			return 1;	/* both inside */
+		if(out1 & out2)
+			return 0;	/* both outside in the same area */
+
+		outout = out1 ? out1 : out2;
+		if(outout & OUT_T) {
+			x = *x1 + (float)(*x2 - *x1) * (float)(top - *y1) / (float)(*y2 - *y1);
+			y = top;
+		} else if(outout & OUT_B) {
+			x = *x1 + (float)(*x2 - *x1) * (float)(bot - *y1) / (float)(*y2 - *y1);
+			y = bot;
+		} else if(outout & OUT_R) {
+			y = *y1 + (float)(*y2 - *y1) * (float)(right - *x1) / (float)(*x2 - *x1);
+			x = right;
+		} else if(outout & OUT_L) {
+			y = *y1 + (float)(*y2 - *y1) * (float)(left - *x1) / (float)(*x2 - *x1);
+			x = left;
+		}
+
+		if(out1) {
+			*x1 = x;
+			*y1 = y;
+			out1 = outcode(*x1, *y1, left, top, right, bot);
+		} else {
+			*x2 = x;
+			*y2 = y;
+			out2 = outcode(*x2, *y2, left, top, right, bot);
+		}
+	}
+	return 1;
+}

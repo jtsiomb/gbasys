@@ -63,4 +63,6 @@ void set_bg_scale(int x, int y);
 #define put_pixel(px, py, col, pbuf)	((unsigned short*)(pbuf)->pixels)[(py) * (pbuf)->x + (px)] = col
 void draw_line(int x1, int y1, int x2, int y2, unsigned short col, struct pixel_buffer *pbuf);
 
+int clip_line(int *x1, int *y1, int *x2, int *y2, int left, int top, int right, int bot);
+
 #endif	/* _GFX_H_ */
