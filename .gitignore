@@ -1,0 +1,7 @@
+*.o
+*.d
+*.swp
+*.a
+*.gba
+*.elf
+dep
