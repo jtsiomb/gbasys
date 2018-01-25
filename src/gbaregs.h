@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GBAREGS_H_
 
 #define REG_BASE		0x4000000
+#define REG8(x)			(*(volatile uint8_t*)(REG_BASE + (x)))
 #define REG16(x)		(*(volatile uint16_t*)(REG_BASE + (x)))
 #define REG32(x)		(*(volatile uint32_t*)(REG_BASE + (x)))
 
