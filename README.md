@@ -1,5 +1,5 @@
 gbasys
-------
+======
 GameBoy Advance hardware abstraction library
 
 Author: John Tsiombikas <nuclear@member.fsf.org>
